@@ -11,16 +11,17 @@ export const useGame = () => {
 
   const handleClick = (index) => {
     if (state.board[index] || state.winner) return;
-
+  
     const newBoard = [...state.board];
     newBoard[index] = state.currentPlayer;
-
+  
     const winner = checkWinner(newBoard);
     if (winner) {
-      dispatch({ type: 'UPDATE_SCORE', payload: winner === 'draw' ? 'draw' : winner });
+      const winnerKey = winner === 'X' ? 'playerX' : 'playerO';
+      dispatch({ type: 'UPDATE_SCORE', payload: winner === 'draw' ? 'draw' : winnerKey });
       dispatch({ type: 'SET_WINNER', payload: winner });
     }
-
+  
     dispatch({
       type: 'UPDATE_BOARD',
       payload: {
@@ -29,6 +30,7 @@ export const useGame = () => {
       },
     });
   };
+  
 
   useEffect(() => {
     saveScoresToLocalStorage(state.scores);
@@ -39,8 +41,8 @@ export const useGame = () => {
     handleClick,
     resetBoard: () => dispatch({ type: 'RESET_BOARD' }),
     resetGame: () => {
-      dispatch({ type: 'RESET_GAME' });
-      localStorage.clear(); 
+      localStorage.clear();
+      dispatch({ type: 'RESET_GAME' }); 
     },
   };
 };

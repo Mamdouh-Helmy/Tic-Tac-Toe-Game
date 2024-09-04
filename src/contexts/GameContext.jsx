@@ -22,10 +22,10 @@ const gameReducer = (state, action) => {
           [action.payload]: (state.scores[action.payload] || 0) + 1,
         },
       };
-    case 'RESET_GAME':
-      return {
-        ...initialState,
-      };
+      case 'RESET_GAME':
+        return {
+          ...initialState,
+        };
     case 'RESET_BOARD':
       return {
         ...state,
